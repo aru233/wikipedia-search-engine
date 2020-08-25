@@ -29,7 +29,7 @@ def process_text(data):
     i = -1
     while 1:
         i += 1
-        if i == num_of_lines:
+        if i >= num_of_lines:
             break
         if "{{infobox" in data_lines[i]:
             i = extract_infobox_data(data_lines, i, num_of_lines)
@@ -37,7 +37,6 @@ def process_text(data):
             extract_category_data(data_lines, i)
         elif "== external links ==" in data_lines[i] or "==external links==" in data_lines[i] or \
                 "== external links==" in data_lines[i] or "==external links ==" in data_lines[i]:
-            i += 1
             i = extract_ext_links(data_lines, i, num_of_lines)
         elif "== references ==" in data_lines[i] or "==references==" in data_lines[i] or "== references==" in \
                 data_lines[i] or "==references ==" in data_lines[i]:
@@ -69,7 +68,7 @@ def extract_references(data_lines, i, num_of_lines):
     i += 1
     curly_total_opened = 0
     while 1:
-        if i == num_of_lines:
+        if i >= num_of_lines:
             break
         if "{{" in data_lines[i]:
             curly_new_opened = data_lines[i].count("{{")
@@ -128,7 +127,7 @@ def extract_infobox_data(data_lines, i, num_of_lines):
         else:
             config.infobox.append(data_lines[i])
         i += 1
-        if i == num_of_lines:
+        if i >= num_of_lines:
             break
     return i
 
