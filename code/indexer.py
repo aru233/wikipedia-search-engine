@@ -2,8 +2,8 @@ import config
 
 from collections import defaultdict
 
+
 def create_index():
-    # global index_map
 
     # vocab_list has all the words present in a page(it's per page, from across the six categories)
     vocab_list = []
@@ -38,11 +38,11 @@ def create_index():
     #     config.file_count += 1
 
 
-def fn():
-    print(config.index_map)
-    config.index_map['2'].append("rew")
-    print(config.index_map)
-
-
-if __name__ == '__main__':
-    fn()
+# def fn():
+#     print(config.index_map)
+#     config.index_map['2'].append("rew")
+#     print(config.index_map)
+#
+#
+# if __name__ == '__main__':
+#     fn()

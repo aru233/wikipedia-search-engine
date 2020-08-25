@@ -1,11 +1,12 @@
 from collections import defaultdict
 import nltk
-
-nltk.download('stopwords')
+nltk.download('punkt')  # for the tokenizer
 from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
-from nltk.tokenize import word_tokenize
+from nltk import word_tokenize
 import re
+nltk.download('stopwords')
+
 
 stopWords = set(stopwords.words('english'))
 stopWordsDict = defaultdict(int)
@@ -17,6 +18,7 @@ def tokenize(data):
     # data = data.encode("ascii", errors="ignore").decode()
     # return data.split()
     return word_tokenize(data)
+    # TODO : use split() or word_tokenize() for tokenization?
 
 
 def casefold(data):

@@ -9,7 +9,7 @@ import config
 def process_title(data):
     config.title = []
     data = casefold(data)
-    # TODO cleanup needed??
+    # TODO "cleanup" needed for title_data??
     tokenized_data = tokenize(data)
     stopword_removed_data = remove_stopwords(tokenized_data)
     stemmed_data = stemming(stopword_removed_data)
@@ -89,15 +89,17 @@ def extract_references(data_lines, i, num_of_lines):
 def extract_ext_links(data_lines, i, num_of_lines):
     i += 1
     while i < num_of_lines:
-        if "* [" in data_lines[i]:
-            split_line = data_lines[i].split("* [")  # CHNG
-            config.links.extend(split_line.split(' '))
-        elif "*[" in data_lines[i]:
-            split_line = data_lines[i].split("*[")  # CHNG
-            config.links.extend(split_line.split(' '))
+        # if "* [" in data_lines[i]:
+        #     split_line = data_lines[i].split("* [")  # CHNG
+        #     config.links.extend(split_line.split(' '))
+        # elif "*[" in data_lines[i]:
+        #     split_line = data_lines[i].split("*[")  # CHNG
+        #     config.links.extend(split_line.split(' '))
+        if "* [" in data_lines[i] or "*[" in data_lines[i]:
+            config.links.extend(data_lines[i].split(' '))
+            i += 1
         else:
             break
-        i += 1
     return i
 
 
