@@ -60,7 +60,7 @@ def process_util(dta):
 
     tempdict = defaultdict(int)
     for x in data:
-        tempdict[x] += 1
+        tempdict[cleanup(x)] += 1
     return tempdict  # returns a dictionary
 
 
