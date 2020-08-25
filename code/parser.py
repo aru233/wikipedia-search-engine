@@ -88,12 +88,6 @@ def extract_references(data_lines, i, num_of_lines):
 def extract_ext_links(data_lines, i, num_of_lines):
     i += 1
     while i < num_of_lines:
-        # if "* [" in data_lines[i]:
-        #     split_line = data_lines[i].split("* [")  # CHNG
-        #     config.links.extend(split_line.split(' '))
-        # elif "*[" in data_lines[i]:
-        #     split_line = data_lines[i].split("*[")  # CHNG
-        #     config.links.extend(split_line.split(' '))
         if "* [" in data_lines[i] or "*[" in data_lines[i]:
             config.links.extend(data_lines[i].split(' '))
             i += 1

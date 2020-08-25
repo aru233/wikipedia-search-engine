@@ -1,22 +1,40 @@
 import config
 
 from collections import defaultdict
-
+from textPreprocessor import cleanup
 
 def create_index():
 
     # vocab_list has all the words present in a page(it's per page, from across the six categories)
     vocab_list = []
-    vocab_list.extend(config.title.keys())
-    vocab_list.extend(config.body.keys())
-    vocab_list.extend(config.infobox.keys())
-    vocab_list.extend(config.category.keys())
-    vocab_list.extend(config.links.keys())
-    vocab_list.extend(config.references.keys())
+    for k in config.title.keys():
+        vocab_list.append(cleanup(k))
+    for k in config.body.keys():
+        vocab_list.append(cleanup(k))
+    for k in config.infobox.keys():
+        vocab_list.append(cleanup(k))
+    for k in config.category.keys():
+        vocab_list.append(cleanup(k))
+    for k in config.links.keys():
+        vocab_list.append(cleanup(k))
+    for k in config.references.keys():
+        vocab_list.append(cleanup(k))
+
+    # vocab_list.extend(config.title.keys())
+    # vocab_list.extend(config.body.keys())
+    # vocab_list.extend(config.infobox.keys())
+    # vocab_list.extend(config.category.keys())
+    # vocab_list.extend(config.links.keys())
+    # vocab_list.extend(config.references.keys())
     vocab_list = set(vocab_list)
 
+    # print("STARTED IN INDEXER")
+    # i=1
     for wrd in vocab_list:
-        posting_list = 'd'+str(config.page_count)+":"
+        # if i < 11:
+        #     print(wrd)
+        #     i += 1
+        posting_list = 'd'+str(config.page_count)+':'
         if config.title[wrd]:
             posting_list += 't' + str(config.title[wrd])
         if config.body[wrd]:

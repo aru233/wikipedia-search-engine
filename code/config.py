@@ -6,6 +6,7 @@ index_map = defaultdict(list)
 # index_map["1"].append("uff")
 
 id_title_map = dict()
+# vocab_list = []
 
 page_count = 1
 file_count = 1
