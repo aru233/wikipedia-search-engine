@@ -15,6 +15,7 @@ def main():
     filename = "enwiki.xml-p1p30303"
     # filename = "tmp_with_infbx.xml"
     # filename = "tmp1.xml-p1p30303"
+    # filename = "tmp17068.xml"
     parser = Parser(filename)  # Parse XML using SAX Parser
 
     # Writing the index_map and id_title_map to file

@@ -9,14 +9,15 @@ import config
 def process_title(data):
     config.title = []
     data = casefold(data)
-    # TODO "cleanup" needed for title_data??
+    data = cleanup(data)
     tokenized_data = tokenize(data)
     stopword_removed_data = remove_stopwords(tokenized_data)
     stemmed_data = stemming(stopword_removed_data)
 
     tempdict = defaultdict(int)
     for wrd in stemmed_data:
-        tempdict[wrd] += 1
+        if len(wrd) >= 2:
+            tempdict[wrd] += 1
 
     config.title = tempdict
 
@@ -60,7 +61,7 @@ def process_util(dta):
 
     tempdict = defaultdict(int)
     for x in data:
-        tempdict[cleanup(x)] += 1
+        tempdict[x] += 1
     return tempdict  # returns a dictionary
 
 
@@ -151,14 +152,11 @@ class XmlContentHandler(xml.sax.handler.ContentHandler):
         if tag == "id" and self.idFlag == 1:
             self.idFlag = 0
         elif tag == "title":
-            # TODO need to pre-process/clean bufferTitle?
             config.id_title_map[config.page_count] = self.bufferTitle
-            # TODO need to encode? (data.encode('utf-8'))
             process_title(self.bufferTitle)
         elif tag == "text":
             process_text(self.bufferText)
             create_index()
-            # TODO - continue the stuff to do here
 
     def characters(self, content):
         if self.current_tag == "id" and self.idFlag == 1:
@@ -176,8 +174,3 @@ class Parser:
         self.handler = XmlContentHandler()
         self.parser.setContentHandler(self.handler)
         self.parser.parse(filename)
-
-    # # noinspection PyMethodMayBeStatic
-    # def get_data(self):
-    #     global title, body, infobox, category, links, references
-    #     return title, body, infobox, category, links, references
