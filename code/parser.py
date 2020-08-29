@@ -1,7 +1,8 @@
 from collections import defaultdict
 import xml.sax
+import re
 
-from textPreprocessor import casefold, remove_stopwords, stemming, cleanup, tokenize
+from text_preprocessor import casefold, remove_stopwords, stemming, cleanup, tokenize
 from indexer import create_index
 import config
 
@@ -9,13 +10,14 @@ import config
 def process_title(data):
     config.title = []
     data = casefold(data)
+    config.token_count_dump += len(data.split())
     data = cleanup(data)
-    tokenized_data = tokenize(data)
-    stopword_removed_data = remove_stopwords(tokenized_data)
-    stemmed_data = stemming(stopword_removed_data)
+    data = tokenize(data)
+    data = remove_stopwords(data)
+    data = stemming(data)
 
     tempdict = defaultdict(int)
-    for wrd in stemmed_data:
+    for wrd in data:
         if len(wrd) >= 2:
             tempdict[wrd] += 1
 
@@ -25,8 +27,10 @@ def process_title(data):
 def process_text(data):
     config.body, config.infobox, config.category, config.links, config.references = [], [], [], [], []
     data = casefold(data)
+    config.token_count_dump += len(data.split())
     data_lines = data.split('\n')
     num_of_lines = len(data_lines)
+    # print("num_of_lines in text: ", num_of_lines)
     i = -1
     while 1:
         i += 1
@@ -79,8 +83,8 @@ def extract_references(data_lines, i, num_of_lines):
             curly_total_opened -= curly_new_closed
         if curly_total_opened <= 0:
             break
-        if "{{reflist" not in data_lines[i] and "{{cite" not in data_lines[i] and "{{vcite" not in data_lines[i]:
-            config.references.append(data_lines[i])
+        if "{{reflist" not in data_lines[i] and 'title' in data_lines[i]:
+            config.references.append(re.sub(r'.*title[\ ]*=[\ ]*([^\|]*).*', r'\1', data_lines[i]))
         i += 1
 
     return i

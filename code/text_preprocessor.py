@@ -1,15 +1,19 @@
-from collections import defaultdict
 # import nltk
 # nltk.download('punkt')  # for the tokenizer
 # from nltk.corpus import stopwords
-from nltk.stem.snowball import SnowballStemmer
 # from nltk import word_tokenize
 # from nltk.stem.porter import *
+
+from collections import defaultdict
+from nltk.stem.snowball import SnowballStemmer
 import re
 
-stopWordsDict = defaultdict(int)
+import config
 
-with open('code/stopwords.txt', 'r') as f:
+stopWordsDict = defaultdict(int)
+stemmer = SnowballStemmer('english')
+
+with open(config.STOPWORD_FILE_PATH, 'r') as f:
     for line in f:
         stopWordsDict[line.strip()] = 1
 
@@ -28,11 +32,15 @@ def remove_stopwords(dta):
     return [wrd for wrd in dta if stopWordsDict[wrd] != 1]
 
 
+def word_stemming(wrd):
+    return stemmer.stem(wrd)
+
+
 def stemming(dta):
-    stemmer = SnowballStemmer('english')
     return [stemmer.stem(wrd) for wrd in dta]
     # stemmer = PorterStemmer()
     # return [stemmer.stem(wrd) for wrd in dta]
+    pass
 
 
 def cleanup(dta):

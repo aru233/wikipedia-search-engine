@@ -20,17 +20,18 @@ def create_index():
         posting_list = 'd'+str(config.page_count)+':'
         if config.title[wrd]:
             posting_list += 't' + str(config.title[wrd])
-        if config.body[wrd]:
-            posting_list += 'b' + str(config.body[wrd])
         if config.infobox[wrd]:
             posting_list += 'i' + str(config.infobox[wrd])
+        if config.body[wrd]:
+            posting_list += 'b' + str(config.body[wrd])
         if config.category[wrd]:
             posting_list += 'c' + str(config.category[wrd])
+        if config.links[wrd]:
+            posting_list += 'l' + str(config.links[wrd])
         if config.references[wrd]:
             posting_list += 'r' + str(config.references[wrd])
 
         config.index_map[wrd].append(posting_list)
-
 
     config.page_count += 1
     # if config.page_count % config.PAGE_LIM_PER_FILE == 0:
@@ -38,4 +39,5 @@ def create_index():
     #     config.index_map = defaultdict(list)
     #     config.id_title_map = dict()
     #     config.file_count += 1
+
 
