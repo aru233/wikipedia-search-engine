@@ -1,7 +1,8 @@
 import timeit
 
+from collections import defaultdict
 from parser import Parser
-from file_handler import writeToFile, writeStatsToFile
+from file_handler import write_into_file, merge_files
 import sys
 
 import config
@@ -17,10 +18,22 @@ def main():
 
     Parser(config.INPUT_FILE_NAME)  # Parse XML using SAX Parser
 
-    # Writing the index_map and id_title_map to file
-    writeToFile()
+    # TODO is this needed?
+    filename = config.OUTPUT_FOLDER_PATH + 'numberOfFiles.txt'
+    with open(filename, 'w') as f:
+        f.write(config.page_count)
 
-    writeStatsToFile()
+    config.title_offset = write_into_file()
+    config.index_map = defaultdict(list)
+    config.id_title_map = dict()
+    config.file_count += 1
+
+    merge_files()
+
+    # # Writing the index_map and id_title_map to file
+    # writeToFile()
+    #
+    # writeStatsToFile()
 
 
 if __name__ == '__main__':

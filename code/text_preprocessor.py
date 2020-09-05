@@ -6,12 +6,14 @@
 
 from collections import defaultdict
 from nltk.stem.snowball import SnowballStemmer
+import Stemmer  # pyStemmer
 import re
 
 import config
 
 stopWordsDict = defaultdict(int)
-stemmer = SnowballStemmer('english')
+# stemmer = SnowballStemmer('english')
+stemmer = Stemmer.Stemmer('english')
 
 with open(config.STOPWORD_FILE_PATH, 'r') as f:
     for line in f:
@@ -33,11 +35,12 @@ def remove_stopwords(dta):
 
 
 def word_stemming(wrd):
-    return stemmer.stem(wrd)
+    return stemmer.stemWord(wrd)
 
 
 def stemming(dta):
-    return [stemmer.stem(wrd) for wrd in dta]
+    return [stemmer.stemWord(wrd) for wrd in dta]
+    # return [stemmer.stem(wrd) for wrd in dta]
     # stemmer = PorterStemmer()
     # return [stemmer.stem(wrd) for wrd in dta]
     pass

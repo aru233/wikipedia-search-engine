@@ -16,7 +16,7 @@ def search_plain_query(query, index_file_name):
             key = line.split(' ', maxsplit=1)[0]
             posting_list = line.split(' ', maxsplit=1)[1].strip()  # strip() to remove newline
             for wrd in query:
-                wrd = re.sub(r'[.,!;_()"/\'=]', '', wrd, flags=re.MULTILINE)
+                # wrd = re.sub(r'[.,!;_()"/\'=]', '', wrd, flags=re.MULTILINE)
                 stem_wrd = word_stemming(wrd)
                 if stem_wrd == key:
                     print(wrd, posting_list)
@@ -44,11 +44,16 @@ def search_field_query(query, index_file_name):
             posting_list = line.split(' ', maxsplit=1)[1].strip()  # strip() to remove newline
             for qu in query_list:
                 field, wrd = qu.split(':')
+                wrd = wrd.split()
                 # print(field, wrd)
-                wrd = re.sub(r'[.,!;_()"/\'=]', '', wrd, flags=re.MULTILINE)
-                stem_wrd = word_stemming(wrd)
-                if stem_wrd == key and field in posting_list:
-                    print(wrd, posting_list)
+                # wrd = re.sub(r'[.,!;_()"/\'=]', '', wrd, flags=re.MULTILINE)
+                for w in wrd:
+                    w = w.strip()
+                    if w is None or w == '' or w == ' ':
+                        continue
+                    stem_wrd = word_stemming(w)
+                    if stem_wrd == key and field in posting_list:
+                        print(w, posting_list)
 
 
 def search(query, index_file_name):
@@ -65,15 +70,23 @@ def main():
     #     sys.exit(0)
     # # TODO: Remember to change this filename accordingly
     # index_file_name = sys.argv[1] + 'index_file.txt'
+
     # query = sys.argv[2]
+    # i = 3
+    # while i < len(sys.argv):  # for query of type: "t:Anarchism is b:humans lived" (separated by space i.e)
+    #     query += ' ' + sys.argv[i]
+    #     i += 1
 
     index_file_name = config.OUTPUT_FOLDER_PATH + 'index_file.txt'
-    query = "anarchism bad"
+    query = "t:Anarchism is b:humans lived"
 
     search(query, index_file_name)
 
 
 if __name__ == '__main__':
+    # txt='t:world'
+    # print(txt.split(':')[1])
+    # print(txt.split(':')[1].split())
     start = timeit.default_timer()
     main()
     stop = timeit.default_timer()

@@ -16,6 +16,7 @@ STOPWORD_FILE_PATH = 'code/stopwords.txt'
 
 
 PAGE_LIM_PER_FILE = 20000
+WORD_LIM = 100000
 
 token_count_index_map = 0
 token_count_dump = 0
@@ -24,9 +25,10 @@ index_map = defaultdict(list)
 
 id_title_map = dict()
 
-page_count = 1
-file_count = 1
-offset = 0
+page_count = 0
+file_count = 0
+# final_index_file_count = 1
+title_offset = 0  # this tells where we left off in the id_title file
 
 '''infobox will be a dict (ultimately) that stores all the words that appear in the infobox of a page and their freq 
 (initially it'll have the resp words in form of a list). Similarly for the other 5 '''

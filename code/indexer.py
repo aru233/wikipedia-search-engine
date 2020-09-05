@@ -1,6 +1,7 @@
 import config
-
+import re
 from collections import defaultdict
+from file_handler import write_into_file
 
 
 def create_index():
@@ -17,7 +18,7 @@ def create_index():
     vocab_list = set(vocab_list)
 
     for wrd in vocab_list:
-        posting_list = 'd'+str(config.page_count)+':'
+        posting_list = 'd'+str(config.page_count)
         if config.title[wrd]:
             posting_list += 't' + str(config.title[wrd])
         if config.infobox[wrd]:
@@ -34,10 +35,18 @@ def create_index():
         config.index_map[wrd].append(posting_list)
 
     config.page_count += 1
-    # if config.page_count % config.PAGE_LIM_PER_FILE == 0:
-    #     # config.offset = writeIntoFile(sys.argv[2], index, dict_Id, countFile, config.offset)
-    #     config.index_map = defaultdict(list)
-    #     config.id_title_map = dict()
-    #     config.file_count += 1
+
+    tempdict = defaultdict(list)
+    for wrd in sorted(config.index_map.keys()):
+        if (len(wrd) < 2) or (not (re.match('^[a-zA-Z0-9]+$', wrd))) or re.match('^[0]+$', wrd):
+            continue
+        tempdict[wrd] = config.index_map[wrd]
+    config.index_map = tempdict
+
+    if config.page_count % config.PAGE_LIM_PER_FILE == 0:
+        config.title_offset = write_into_file()
+        config.index_map = defaultdict(list)
+        config.id_title_map = dict()
+        config.file_count += 1
 
 
