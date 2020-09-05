@@ -21,12 +21,15 @@ def main():
     # TODO is this needed?
     filename = config.OUTPUT_FOLDER_PATH + 'numberOfFiles.txt'
     with open(filename, 'w') as f:
-        f.write(config.page_count)
+        f.write(str(config.page_count))
 
     config.title_offset = write_into_file()
     config.index_map = defaultdict(list)
     config.id_title_map = dict()
     config.file_count += 1
+
+    print("FILE COUNT="+str(config.file_count))
+    print("PAGE COUNT=" + str(config.page_count))
 
     merge_files()
 

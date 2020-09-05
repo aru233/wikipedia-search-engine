@@ -4,7 +4,7 @@ from collections import defaultdict
 # filename = "tmp_with_infbx.xml"
 # filename = "tmp1.xml-p1p30303"
 # filename = "tmp17068.xml"
-INPUT_FILE_NAME = 'tmp1.xml-p1p30303'
+INPUT_FILE_NAME = "tmp_with_infbx.xml"
 OUTPUT_FOLDER_PATH = 'data/'
 STATS_FILE_NAME = 'data/invertedindex_stat.txt'
 STOPWORD_FILE_PATH = 'code/stopwords.txt'
@@ -15,8 +15,8 @@ STOPWORD_FILE_PATH = 'code/stopwords.txt'
 # STOPWORD_FILE_PATH = '2019201015/stopwords.txt'
 
 
-PAGE_LIM_PER_FILE = 20000
-WORD_LIM = 100000
+PAGE_LIM_PER_FILE = 2  # 20000
+WORD_LIM = 100  # 100000
 
 token_count_index_map = 0
 token_count_dump = 0

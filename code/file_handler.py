@@ -4,6 +4,7 @@ import heapq
 from collections import defaultdict
 from tqdm import tqdm
 import threading
+glob_wrd_cnt = 0
 
 
 def write_into_file():
@@ -45,6 +46,9 @@ def write_into_file():
 
 
 def merge_files():
+    # TODO rm ?
+    global glob_wrd_cnt
+
     heap = []
     file_ptrs = {}
     file_flag = [0] * config.file_count
@@ -69,13 +73,15 @@ def merge_files():
         word_count += 1
         tmp = heapq.heappop(heap)
         if word_count % config.WORD_LIM == 0:
+            # TODO rm ?
+            glob_wrd_cnt = word_count
             count_old = count_final
             count_final, offset_size = write_into_final_index_file(data, count_final, offset_size)
             if count_old != count_final:
                 data = defaultdict(list)
         for i in range(config.file_count):
             if file_flag[i] == 1 and tmp == words[i][0]:
-                data[tmp].extends(words[i][1:])
+                data[tmp].extend(words[i][1:])
                 line_in_file[i] = file_ptrs[i].readline().strip()
                 if line_in_file[i] != '':
                     words[i] = line_in_file[i].split()
@@ -86,6 +92,8 @@ def merge_files():
                     file_flag[i] = 0
 
     _, _ = write_into_final_index_file(data, count_final, offset_size)
+
+    print("COUNT_FINAL="+str(count_final))
 
 
 def write_into_final_index_file(data, count_final, offset_size):
@@ -112,6 +120,7 @@ def write_into_final_index_file(data, count_final, offset_size):
             temp = re.sub(r'.*t([0-9]*).*', r'\1', posting)
             if temp != posting: # the 'key' is present in title of some doc
                 title_dod[key][doc_id] = float(temp)
+                # print("yay")
 
             temp = re.sub(r'.*b([0-9]*).*', r'\1', posting)
             if temp != posting:
@@ -182,8 +191,10 @@ def write_to_field_based_files(data, title_dod, body_dod, infobox_dod, category_
     for key in tqdm(sorted(data.keys())):
         if key in title_dod:
             string = key + ' '
-            tdocs = title_dod[key]  # tdocs is a dict; keys are the docIDs and values are the count of occ of word 'key' in title
-            sorted_doc_ids = sorted(tdocs, key=tdocs.get, reverse=True)  # returns the keys sorted in descending order of the values
+            tdocs = title_dod[key]
+            # tdocs is a dict; keys are the docIDs and values are the count of occ of word 'key' in title
+            sorted_doc_ids = sorted(tdocs, key=tdocs.get, reverse=True)
+            # returns the keys sorted in descending order of the values
             for doc in sorted_doc_ids:
                 string += doc + ' ' + str(title_dod[key][doc]) + ' '
             title_offset.append(str(prev_offset_title) + ' ' + str(len(sorted_doc_ids)))
@@ -240,14 +251,12 @@ def write_to_field_based_files(data, title_dod, body_dod, infobox_dod, category_
             prev_offset_reference += len(string) + 1
             reference_data.append(string)
 
-    thread = []
-
-    thread.append(WriteThread('t', title_data, title_offset, count_final))
-    thread.append(WriteThread('b', body_data, body_offset, count_final))
-    thread.append(WriteThread('i', infobox_data, infobox_offset, count_final))
-    thread.append(WriteThread('c', category_data, category_offset, count_final))
-    thread.append(WriteThread('l', link_data, link_offset, count_final))
-    thread.append(WriteThread('r', reference_data, reference_offset, count_final))
+    thread = [WriteThread('t', title_data, title_offset, count_final),
+              WriteThread('b', body_data, body_offset, count_final),
+              WriteThread('i', infobox_data, infobox_offset, count_final),
+              WriteThread('c', category_data, category_offset, count_final),
+              WriteThread('l', link_data, link_offset, count_final),
+              WriteThread('r', reference_data, reference_offset, count_final)]
 
     for i in range(6):
         thread[i].start()
