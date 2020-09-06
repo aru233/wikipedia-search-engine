@@ -5,6 +5,9 @@ tmp_with_infbx.xml
 tmp1.xml-p1p30303
 tmp17068.xml
 data/
+dump_data/
 
 *.xml
 *.xml-p1p30303
+
+queries_op.txt
