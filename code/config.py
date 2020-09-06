@@ -15,8 +15,8 @@ STOPWORD_FILE_PATH = 'code/stopwords.txt'
 # STOPWORD_FILE_PATH = '2019201015/stopwords.txt'
 
 
-PAGE_LIM_PER_FILE = 2  # 20000
-WORD_LIM = 100  # 100000
+PAGE_LIM_PER_FILE = 3  # 20000
+WORD_LIM = 500  # 100000
 
 token_count_index_map = 0
 token_count_dump = 0

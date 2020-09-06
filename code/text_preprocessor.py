@@ -57,3 +57,7 @@ def cleanup(dta):
     text = re.sub(r'[~`!@#$%&-^*+{\[}\]()":|\\<>/?]', ' ', text, flags=re.MULTILINE)
 
     return dta
+
+
+if __name__=='__main__':
+    print(stemmer.stemWord('category'))

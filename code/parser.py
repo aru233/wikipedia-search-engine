@@ -10,7 +10,7 @@ import config
 def process_title(data):
     config.title = []
     data = casefold(data)
-    config.token_count_dump += len(data.split())
+    # config.token_count_dump += len(data.split())
     data = cleanup(data)
     data = tokenize(data)
     data = remove_stopwords(data)

@@ -66,6 +66,9 @@ def merge_files():
         file_flag[i] = 1
         line_in_file[i] = file_ptrs[i].readline().strip()
         words[i] = line_in_file[i].split()
+        if len(words[i]) == 0:
+            file_flag[i] = 0
+            continue
         if words[i][0] not in heap:
             heapq.heappush(heap, words[i][0])
 
@@ -106,7 +109,11 @@ def write_into_final_index_file(data, count_final, offset_size):
     category_dod = defaultdict(dict)
     link_dod = defaultdict(dict)
     reference_dod = defaultdict(dict)
+
+    # ALL the words ever in the dump + the actual file no.(i.e after merging) it'll be in (int text, body, category..)
     distinct_words = []
+
+    # This is the offset for the vocab.txt file we'll write with the distinct_words
     offset = []
 
     for key in tqdm(sorted(data.keys())):
@@ -155,7 +162,7 @@ def write_into_final_index_file(data, count_final, offset_size):
         f.write('\n'.join(distinct_words))
         f.write('\n')
 
-    filename = config.OUTPUT_FOLDER_PATH + 'offset.txt'
+    filename = config.OUTPUT_FOLDER_PATH + 'vocab_offset.txt'
     with open(filename, 'a') as f:
         f.write('\n'.join(offset))
         f.write('\n')
@@ -193,8 +200,10 @@ def write_to_field_based_files(data, title_dod, body_dod, infobox_dod, category_
             string = key + ' '
             tdocs = title_dod[key]
             # tdocs is a dict; keys are the docIDs and values are the count of occ of word 'key' in title
+
             sorted_doc_ids = sorted(tdocs, key=tdocs.get, reverse=True)
             # returns the keys sorted in descending order of the values
+
             for doc in sorted_doc_ids:
                 string += doc + ' ' + str(title_dod[key][doc]) + ' '
             title_offset.append(str(prev_offset_title) + ' ' + str(len(sorted_doc_ids)))
