@@ -38,14 +38,17 @@ def find_docs(fptr_field_file, file_no, field, word):
         return doc_list, doc_freq[mid]  # doc_freq[mid] will basically be equal to len of doc_list
 
 
-def fetch_doc_titles(low, high, title_offset_list, word, fptr_id_title):
+def fetch_doc_titles(low, high, title_offset_list, doc_id, fptr_id_title):
+    # print("IN fetch_doc_titles; doc_id:", doc_id)
+    # print("low high: ", low, high)
     while low < high:
         mid = int((low + high) / 2)
         fptr_id_title.seek(title_offset_list[mid])
         word_ptr = fptr_id_title.readline().strip().split()
-        if int(word) == int(word_ptr[0]):
+        # print("Word_ptr: ", word_ptr)
+        if int(doc_id) == int(word_ptr[0]):
             return word_ptr[1:], mid
-        elif int(word) > int(word_ptr[0]):
+        elif int(doc_id) < int(word_ptr[0]):
             high = mid
         else:
             low = mid + 1
