@@ -6,7 +6,7 @@ from collections import defaultdict
 # filename = "tmp17068.xml"
 INPUT_FILE_NAME = "tmp_with_infbx.xml"
 OUTPUT_FOLDER_PATH = 'data/'
-STATS_FILE_NAME = 'data/invertedindex_stat.txt'
+STATS_FILE_NAME = 'data/stats.txt'
 STOPWORD_FILE_PATH = 'code/stopwords.txt'
 
 # INPUT_FILE_NAME = '/home/wiki/multistream1.xml-p1p30303'  #'tmp1.xml-p1p30303'
@@ -18,7 +18,7 @@ STOPWORD_FILE_PATH = 'code/stopwords.txt'
 PAGE_LIM_PER_FILE = 3  # 20000
 WORD_LIM = 500  # 100000
 
-token_count_index_map = 0
+token_count_inverted_index = 0
 token_count_dump = 0
 
 index_map = defaultdict(list)

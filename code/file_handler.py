@@ -2,7 +2,7 @@ import config
 import re
 import heapq
 from collections import defaultdict
-from tqdm import tqdm
+# from tqdm import tqdm
 import threading
 glob_wrd_cnt = 0
 
@@ -97,6 +97,7 @@ def merge_files():
     _, _ = write_into_final_index_file(data, count_final, offset_size)
 
     print("COUNT_FINAL="+str(count_final))
+    return count_final
 
 
 def write_into_final_index_file(data, count_final, offset_size):
@@ -116,7 +117,8 @@ def write_into_final_index_file(data, count_final, offset_size):
     # This is the offset for the vocab.txt file we'll write with the distinct_words
     offset = []
 
-    for key in tqdm(sorted(data.keys())):
+    # for key in tqdm(sorted(data.keys())):
+    for key in sorted(data.keys()):
         list_of_postings = data[key]
         # temp = []
 
@@ -154,8 +156,8 @@ def write_into_final_index_file(data, count_final, offset_size):
         offset_size += len(string) + 1
 
     write_to_field_based_files(data, title_dod, body_dod, infobox_dod, category_dod, link_dod, reference_dod, count_final)
+    config.token_count_inverted_index += len(distinct_words)
 
-    # TODO needed?
     filename = config.OUTPUT_FOLDER_PATH + 'vocab.txt'
     with open(filename, 'a') as f:
         f.write('\n'.join(distinct_words))
@@ -194,7 +196,8 @@ def write_to_field_based_files(data, title_dod, body_dod, infobox_dod, category_
     reference_offset = []
     prev_offset_reference = 0
 
-    for key in tqdm(sorted(data.keys())):
+    # for key in tqdm(sorted(data.keys())):
+    for key in sorted(data.keys()):
         if key in title_dod:
             string = key + ' '
             tdocs = title_dod[key]

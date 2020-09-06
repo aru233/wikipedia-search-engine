@@ -31,12 +31,20 @@ def main():
     print("FILE COUNT="+str(config.file_count))
     print("PAGE COUNT=" + str(config.page_count))
 
-    merge_files()
+    count_final = merge_files()
 
     # # Writing the index_map and id_title_map to file
     # writeToFile()
     #
-    # writeStatsToFile()
+    write_to_stats_file(count_final)
+
+
+def write_to_stats_file(count_final):
+    filename = config.STATS_FILE_NAME
+    with open(filename, 'w') as f:
+        # f.write()  # index size in GB
+        f.write(str(int(count_final+1) * 6) + '\n')
+        f.write(str(config.token_count_inverted_index) + '\n')
 
 
 if __name__ == '__main__':
