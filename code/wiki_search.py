@@ -25,11 +25,12 @@ def search_field_query(words, fields):
         '''
         docs will contain 2 things:
         1. the file no. to look into for the word 'word' (say its 2. Then look into t2.txt, b2.txt, i2.txt, r2.txt, 
-        l2.txt, c2.txt); it has for ALL fields (no filtering done).
+        l2.txt, c2.txt);.
         2. The count of documents/wiki pages in which the word 'word' occurs
         
-        And say we look into b2.txt (later), then it is there that we'll find the exact 9 doc numbers in which the word 
-        occurs, along with the freq of the word in each of the 9 docs
+        And say we look into b2.txt (later), then it is there that we'll find the exact doc numbers in which the word 
+        occurs in the BODY, along with the freq of the word in each of the docs 
+        (for t2.txt we'll find words that occur in the TITLE and so on)
         '''
         print('DOCS', docs)
         if len(docs) > 0:

@@ -1,0 +1,24 @@
+8, Autism
+0, AfghanistanGeography
+1, AfghanistanPeople
+2, AfghanistanCommunications
+3, AfghanistanTransportations
+4, AfghanistanMilitary
+5, AfghanistanTransnationalIssues
+6, AssistiveTechnology
+7, AmoeboidTaxa
+0.031981189000362065,0.031981189000362065
+
+8, Autism
+0, AfghanistanGeography
+1, AfghanistanPeople
+2, AfghanistanCommunications
+3, AfghanistanTransportations
+4, AfghanistanMilitary
+5, AfghanistanTransnationalIssues
+6, AssistiveTechnology
+7, AmoeboidTaxa
+0.01364824400661746,0.01364824400661746
+
+0.0018917269990197383,0.0018917269990197383
+
