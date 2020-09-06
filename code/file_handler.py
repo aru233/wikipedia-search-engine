@@ -127,7 +127,6 @@ def write_into_final_index_file(data, count_final, offset_size):
             temp = re.sub(r'.*t([0-9]*).*', r'\1', posting)
             if temp != posting: # the 'key' is present in title of some doc
                 title_dod[key][doc_id] = float(temp)
-                # print("yay")
 
             temp = re.sub(r'.*b([0-9]*).*', r'\1', posting)
             if temp != posting:

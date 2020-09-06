@@ -1,1 +1,4 @@
 10, r:category 2006
+10, category 2006
+10, b:category i:2006
+10, i:category 2006

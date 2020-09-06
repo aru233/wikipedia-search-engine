@@ -3,7 +3,7 @@ import config
 
 def find_file_no(low, high, offset_list, word, fptr):
     # print("IN FIND_FILE_NO")
-    # print("TO search: ", word)
+    # print("TO search: ", word, " low:", low, " high:", high)
 
     while low < high:
         mid = int((low + high) / 2)
