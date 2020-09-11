@@ -1,9 +1,11 @@
-import config
+import os
 import re
 import heapq
 from collections import defaultdict
 # from tqdm import tqdm
 import threading
+
+import config
 glob_wrd_cnt = 0
 
 
@@ -93,6 +95,8 @@ def merge_files():
                 else:  # all words of i th temp index file have been processed;
                     file_ptrs[i].close()
                     file_flag[i] = 0
+                    # if os.path.isfile(file_ptrs[i].name):
+                    #     os.remove(file_ptrs[i].name)
 
     _, _ = write_into_final_index_file(data, count_final, offset_size)
 

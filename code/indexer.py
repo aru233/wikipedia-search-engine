@@ -47,6 +47,7 @@ def create_index():
         config.title_offset = write_into_file()
         config.index_map = defaultdict(list)
         config.id_title_map = dict()
+        print("Files till now: ", config.file_count)
         config.file_count += 1
 
 

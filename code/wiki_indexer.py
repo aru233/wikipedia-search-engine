@@ -4,6 +4,7 @@ from collections import defaultdict
 from parser import Parser
 from file_handler import write_into_file, merge_files
 import sys
+from datetime import datetime
 
 import config
 
@@ -16,9 +17,9 @@ def main():
     # config.OUTPUT_FOLDER_PATH = sys.argv[2]
     # config.STATS_FILE_NAME = sys.argv[3]
 
-    Parser(config.INPUT_FILE_NAME)  # Parse XML using SAX Parser
+    # Parser(config.INPUT_FILE_NAME)  # Parse XML using SAX Parser
+    Parser()
 
-    # TODO is this needed?
     filename = config.OUTPUT_FOLDER_PATH + 'numberOfFiles.txt'
     with open(filename, 'w') as f:
         f.write(str(config.page_count))
@@ -31,12 +32,10 @@ def main():
     print("FILE COUNT="+str(config.file_count))
     print("PAGE COUNT=" + str(config.page_count))
 
-    count_final = merge_files()
-
-    # # Writing the index_map and id_title_map to file
-    # writeToFile()
+    # print("Going to merge files")
+    # count_final = merge_files()
     #
-    write_to_stats_file(count_final)
+    # write_to_stats_file(count_final)
 
 
 def write_to_stats_file(count_final):
@@ -48,7 +47,8 @@ def write_to_stats_file(count_final):
 
 
 if __name__ == '__main__':
+    print(datetime.now().time())
     start = timeit.default_timer()
     main()
     stop = timeit.default_timer()
-    print("Time taken to index: ", stop - start)
+    print("Time taken to index: ", (stop - start)/60, " min")

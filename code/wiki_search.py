@@ -152,10 +152,10 @@ def search():
                 'results' for a simple query will have entry for all 6 fields, the corres val might be empty/non-empty 
                 depending on the fields in which the word occurs
                 '''
-                print("B4 Ranking; Results:", results, "doc_freq:", doc_freq)
+                # print("B4 Ranking; Results:", results, "doc_freq:", doc_freq)
                 top_k_results = rank(k, results, doc_freq, num_of_files, title_offset, fptr_id_title)
-
-            print('\nRanked Results:\n', top_k_results)
+                print("Ranking done")
+            # print('\nRanked Results:\n', top_k_results)
 
             end = timeit.default_timer()
             print(end - start)

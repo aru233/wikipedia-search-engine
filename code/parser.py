@@ -1,6 +1,8 @@
+import glob
 from collections import defaultdict
 import xml.sax
 import re
+import bz2
 
 from text_preprocessor import casefold, remove_stopwords, stemming, cleanup, tokenize
 from indexer import create_index
@@ -157,6 +159,7 @@ class XmlContentHandler(xml.sax.handler.ContentHandler):
             self.idFlag = 0
         elif tag == "title":
             config.id_title_map[config.page_count] = self.bufferTitle
+            print("pg", config.page_count)
             process_title(self.bufferTitle)
         elif tag == "text":
             process_text(self.bufferText)
@@ -172,9 +175,21 @@ class XmlContentHandler(xml.sax.handler.ContentHandler):
 
 
 class Parser:
-    def __init__(self, filename):
+    def __init__(self):
         self.parser = xml.sax.make_parser()
         self.parser.setFeature(xml.sax.handler.feature_namespaces, 0)
         self.handler = XmlContentHandler()
         self.parser.setContentHandler(self.handler)
-        self.parser.parse(filename)
+
+        # self.parser.parse(config.INPUT_FILE_NAME)
+
+        files = glob.glob('dump_data/*')  # TODO: might need to change the path of folder
+        for fle in files:
+            print("files name: ", fle)
+            xml_ip = bz2.BZ2File(fle, 'r')
+            self.parser.parse(xml_ip)
+
+        # files = glob.glob('dump_data/unzipped/*.xml*')  # TODO: might need to change the path of folder
+        # for file in files:
+        #     # print("files name: ", file)
+        #     self.parser.parse(file)
